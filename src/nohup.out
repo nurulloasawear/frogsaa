@@ -1,0 +1,67 @@
+Watching for file changes with StatReloader
+Not Found: /
+[31/May/2025 23:58:10] "GET / HTTP/1.1" 404 2303
+Not Found: /favicon.ico
+[31/May/2025 23:58:11] "GET /favicon.ico HTTP/1.1" 404 2354
+Not Found: /
+[31/May/2025 23:58:11] "GET / HTTP/1.1" 404 2303
+Not Found: /favicon.ico
+[31/May/2025 23:58:11] "GET /favicon.ico HTTP/1.1" 404 2354
+Not Found: /
+[31/May/2025 23:58:55] "GET / HTTP/1.1" 404 2303
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have 18 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): admin, auth, contenttypes, sessions.
+Run 'python manage.py migrate' to apply them.
+May 31, 2025 - 23:55:03
+Django version 5.2.1, using settings 'src.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+
+WARNING: This is a development server. Do not use it in a production setting. Use a production WSGI or ASGI server instead.
+For more information on production servers see: https://docs.djangoproject.com/en/5.2/howto/deployment/
+Watching for file changes with StatReloader
+Not Found: /
+[01/Jun/2025 00:07:17] "GET / HTTP/1.1" 404 2303
+Performing system checks...
+
+System check identified no issues (0 silenced).
+June 01, 2025 - 00:07:14
+Django version 5.2.1, using settings 'src.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+
+WARNING: This is a development server. Do not use it in a production setting. Use a production WSGI or ASGI server instead.
+For more information on production servers see: https://docs.djangoproject.com/en/5.2/howto/deployment/
+Watching for file changes with StatReloader
+[01/Jun/2025 03:20:28] "OPTIONS /api/api_1/item/ HTTP/1.1" 200 0
+[01/Jun/2025 03:20:28] "OPTIONS /api/api_1/item HTTP/1.1" 200 0
+Unauthorized: /api/api_2/statistics/
+[01/Jun/2025 03:20:28] "GET /api/api_2/statistics/ HTTP/1.1" 401 172
+Not Found: /api/api_1/item/
+[01/Jun/2025 03:20:28] "GET /api/api_1/item/ HTTP/1.1" 404 5818
+Not Found: /api/api_1/item
+[01/Jun/2025 03:20:28] "GET /api/api_1/item HTTP/1.1" 404 5815
+Unauthorized: /api/token/
+[01/Jun/2025 03:20:37] "POST /api/token/ HTTP/1.1" 401 63
+Unauthorized: /api/token/
+[01/Jun/2025 03:20:40] "POST /api/token/ HTTP/1.1" 401 63
+[01/Jun/2025 03:21:01] "POST /api/token/ HTTP/1.1" 200 483
+Not Found: /api/api_1/item/
+[01/Jun/2025 03:21:01] "GET /api/api_1/item/ HTTP/1.1" 404 5818
+[01/Jun/2025 03:21:01] "GET /api/api_2/statistics/ HTTP/1.1" 200 734
+Not Found: /api/api_1/item
+[01/Jun/2025 03:21:01] "GET /api/api_1/item HTTP/1.1" 404 5815
+[01/Jun/2025 03:21:02] "POST /api/token/ HTTP/1.1" 200 483
+Not Found: /api/api_1/item
+[01/Jun/2025 03:21:29] "GET /api/api_1/item HTTP/1.1" 404 5815
+Not Found: /api/api_1/item/
+[01/Jun/2025 03:21:34] "GET /api/api_1/item/ HTTP/1.1" 404 5818
+[01/Jun/2025 03:24:35] "GET /api/api_2/statistics/ HTTP/1.1" 200 734
+[01/Jun/2025 03:24:35] "GET /api/api_1/items/ HTTP/1.1" 200 920
+[01/Jun/2025 03:24:35] "GET /api/api_1/items/ HTTP/1.1" 200 920
+[01/Jun/2025 03:29:41,264] - Broken pipe from ('51.158.150.188', 60000)
+Not Found: /www.google.com:443
+[01/Jun/2025 04:50:17] "CONNECT www.google.com:443 HTTP/1.1" 404 1862
