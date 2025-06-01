@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kirish 1</title>
+    <link rel="stylesheet" href="asserts/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Kirish 1</h2>
+        <form id="signin-form">
+            <div class="form-group">
+                <label for="username">Foydalanuvchi nomi:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Parol:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Kirish</button>
+        </form>
+    </div>
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('Umumiy script yuklandi!');
+
+    // SIGN IN SAHIFA LOGIKASI (signin.html uchun)
+    const signinForm = document.getElementById('signin-form');
+    if (signinForm) {
+        console.log('signin.html formasi topildi');
+        signinForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const usernameInput = document.getElementById('username');
+            const passwordInput = document.getElementById('password');
+            if (usernameInput && passwordInput) {
+                const username = usernameInput.value;
+                const password = passwordInput.value;
+
+                try {
+                    const response = await fetch('http://13.60.5.226:8000/api/token/', { // Signin API manzili
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ username, password }),
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok && data.access) { // Agar javob yaxshi bo'lsa va access token bo'lsa
+                        localStorage.setItem('foydalanuvchi_nomi', username);
+                        localStorage.setItem('accessToken', data.access); // Tokenni localStorage ga saqlash
+                        window.location.href = 'dashboard.html'; // Dashboardga yo'naltirish
+                    } else {
+                        console.error('Kirishda xatolik:', data.message || 'Xatolik yuz berdi');
+                        // Xatolik haqida foydalanuvchini ogohlantirish
+                    }
+                } catch (error) {
+                    console.error('Kirish so\'rovida xatolik:', error);
+                    // Tarmoq xatoligi haqida foydalanuvchini ogohlantirish
+                }
+            }
+        });
+    } else {
+        console.log('signin.html formasi topilmadi.');
+    }
+});
+</script>
+</body>
+</html>
+

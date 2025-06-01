@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD Amallar</title>
+    <link rel="stylesheet" href="asserts/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="crud.html">CRUD</a></li>
+                    <li><a href="dashboard.html">Bosh Sahifa</a></li>
+                    </ul>
+            </nav>
+        </header>
+
+        <h2>Elementlar</h2>
+        <form id="crud-form">
+            <input type="hidden" id="id">
+            <div class="form-group">
+                <label for="name">Nomi:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Tavsifi:</label>
+                <textarea id="description" name="description"></textarea>
+            </div>
+            <button type="submit">Saqlash</button>
+            <button type="button" id="cancel-edit" style="display:none;">Bekor qilish</button>
+        </form>
+
+        <h3>Mavjud Elementlar</h3>
+        <table id="data-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nomi</th>
+                    <th>Tavsifi</th>
+                    <th>Amallar</th>
+                </tr>
+            </thead>
+            <tbody id="data-body">
+                </tbody>
+        </table>
+    </div>
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('crud.html uchun script yuklandi!');
+
+    // crud.html elementlarini olish
+    const itemTable = document.getElementById('data-table');
+    const crudForm = document.getElementById('crud-form');
+    const nameInput = document.getElementById('name');
+    const descriptionInput = document.getElementById('description');
+    const idInput = document.getElementById('id');
+    const cancelEditBtn = document.getElementById('cancel-edit');
+
+    if (itemTable) {
+        loadItems();
+    }
+
+    if (crudForm) {
+        crudForm.addEventListener('submit', saveItem);
+    }
+
+    if (cancelEditBtn) {
+        cancelEditBtn.addEventListener('click', clearForm);
+    }
+
+    function loadItems() {
+        const token = localStorage.getItem('accessToken');
+        fetch('http://13.60.5.226:8000/api/api_1/items/', {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+        })
+            .then(response => response.json())
+            .then(data => displayItems(data))
+            .catch(error => console.error('Elementlarni olishda xatolik (Loyiha 1):', error));
+    }
+
+    function displayItems(items) {
+        const tbody = document.getElementById('data-body');
+        if (tbody) {
+            tbody.innerHTML = '';
+            items.forEach(item => {
+                const row = tbody.insertRow();
+                row.innerHTML = `
+                    <td>${item.id}</td>
+                    <td>${item.name}</td>
+                    <td>${item.description}</td>
+                    <td>
+                        <button onclick="window.editItem(${item.id})">Tahrirlash</button>
+                        <button onclick="window.deleteItem(${item.id})">O'chirish</button>
+                    </td>
+                `;
+            });
+        }
+    }
+
+    async function saveItem(event) {
+        event.preventDefault();
+        if (nameInput && descriptionInput && idInput) {
+            const name = nameInput.value;
+            const description = descriptionInput.value;
+            const id = idInput.value;
+
+            const itemData = { name: name, description: description };
+            const method = id ? 'PUT' : 'POST';
+            const url = id ? `http://13.60.5.226:8000/api/api_1/items/${id}/` : 'http://13.60.5.226:8000/api/api_1/items/';
+            const token = localStorage.getItem('accessToken');
+
+            try {
+                const response = await fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                    },
+                    body: JSON.stringify(itemData),
+                });
+                const data = await response.json();
+                loadItems();
+                clearForm();
+            } catch (error) {
+                console.error('Elementni saqlashda xatolik (Loyiha 1):', error);
+            }
+        }
+    }
+
+    window.editItem = function(id) {
+        const token = localStorage.getItem('accessToken');
+        fetch(`http://13.60.5.226:8000/api/api_1/items/${id}/`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+        })
+            .then(response => response.json())
+            .then(item => {
+                if (nameInput && descriptionInput && idInput) {
+                    idInput.value = item.id;
+                    nameInput.value = item.name;
+                    descriptionInput.value = item.description;
+                    if (cancelEditBtn) {
+                        cancelEditBtn.style.display = 'inline';
+                    }
+                }
+            })
+            .catch(error => console.error('Elementni olishda xatolik (Loyiha 1):', error));
+    };
+
+    window.deleteItem = function(id) {
+        if (confirm('Elementni o\'chirishga ishonchingiz komilmi?')) {
+            const token = localStorage.getItem('accessToken');
+            fetch(`http://13.60.5.226:8000/api/api_1/items/${id}/`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            })
+                .then(() => loadItems())
+                .catch(error => console.error('Elementni o\'chirishda xatolik (Loyiha 1):', error));
+        }
+    };
+
+    function clearForm() {
+        if (crudForm && nameInput && descriptionInput && idInput && cancelEditBtn) {
+            crudForm.reset();
+            idInput.value = '';
+            cancelEditBtn.style.display = 'none';
+        }
+    }
+});
+</script>
+</body>
+</html>

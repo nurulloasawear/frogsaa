@@ -1,0 +1,40 @@
+84.54.92.94 - - [01/Jun/2025 07:12:40] code 404, message File not found
+84.54.92.94 - - [01/Jun/2025 07:12:40] "GET /pages/dashboard.html HTTP/1.1" 404 -
+84.54.92.94 - - [01/Jun/2025 07:12:41] "GET / HTTP/1.1" 200 -
+84.54.92.94 - - [01/Jun/2025 07:12:45] "GET /dashboard.html%3A HTTP/1.1" 200 -
+84.54.92.94 - - [01/Jun/2025 07:12:58] "GET /nohup.out HTTP/1.1" 200 -
+84.54.92.94 - - [01/Jun/2025 07:13:01] "GET /sign-in.html HTTP/1.1" 200 -
+84.54.92.94 - - [01/Jun/2025 07:13:01] "GET /asserts/css/style.css HTTP/1.1" 200 -
+84.54.92.94 - - [01/Jun/2025 07:13:09] "GET /signin.html HTTP/1.1" 200 -
+84.54.92.94 - - [01/Jun/2025 07:13:12] "GET /crud.html HTTP/1.1" 200 -
+84.54.92.94 - - [01/Jun/2025 07:13:13] "GET /asserts/css/style.css HTTP/1.1" 304 -
+84.54.92.94 - - [01/Jun/2025 07:13:13] code 404, message File not found
+84.54.92.94 - - [01/Jun/2025 07:13:13] "GET /api/api_1/items/ HTTP/1.1" 404 -
+Serving HTTP on 0.0.0.0 port 5500 (http://0.0.0.0:5500/) ...
+
+Keyboard interrupt received, exiting.
+84.54.92.94 - - [01/Jun/2025 07:15:25] "GET / HTTP/1.1" 200 -
+84.54.92.94 - - [01/Jun/2025 07:15:29] "GET / HTTP/1.1" 200 -
+84.54.92.94 - - [01/Jun/2025 07:15:30] "GET /dashboard.html HTTP/1.1" 200 -
+84.54.92.94 - - [01/Jun/2025 07:15:30] "GET /asserts/css/style.css HTTP/1.1" 304 -
+84.54.92.94 - - [01/Jun/2025 07:15:30] code 404, message File not found
+84.54.92.94 - - [01/Jun/2025 07:15:30] "GET /api/dashboard/items-chart-data/ HTTP/1.1" 404 -
+84.54.92.94 - - [01/Jun/2025 07:15:30] code 404, message File not found
+84.54.92.94 - - [01/Jun/2025 07:15:30] "GET /api/api_2/statistics/ HTTP/1.1" 404 -
+84.54.92.94 - - [01/Jun/2025 07:15:30] code 404, message File not found
+84.54.92.94 - - [01/Jun/2025 07:15:30] "GET /api/dashboard/statics-chart-data/ HTTP/1.1" 404 -
+84.54.92.94 - - [01/Jun/2025 07:15:33] code 404, message File not found
+84.54.92.94 - - [01/Jun/2025 07:15:33] "GET /pages/signin.html HTTP/1.1" 404 -
+84.54.92.94 - - [01/Jun/2025 07:15:51] "GET /signin.html HTTP/1.1" 304 -
+84.54.92.94 - - [01/Jun/2025 07:15:56] code 501, message Unsupported method ('POST')
+84.54.92.94 - - [01/Jun/2025 07:15:56] "POST /api/token/ HTTP/1.1" 501 -
+84.54.92.94 - - [01/Jun/2025 07:15:58] code 501, message Unsupported method ('POST')
+84.54.92.94 - - [01/Jun/2025 07:15:58] "POST /api/token/ HTTP/1.1" 501 -
+Serving HTTP on 0.0.0.0 port 5500 (http://0.0.0.0:5500/) ...
+
+Keyboard interrupt received, exiting.
+84.54.92.94 - - [01/Jun/2025 07:22:17] "GET /signin.html HTTP/1.1" 200 -
+84.54.92.94 - - [01/Jun/2025 07:22:17] "GET /asserts/css/style.css HTTP/1.1" 304 -
+84.54.92.94 - - [01/Jun/2025 07:22:48] "GET /dashboard.html HTTP/1.1" 200 -
+84.54.92.94 - - [01/Jun/2025 07:23:05] "GET /crud.html HTTP/1.1" 200 -
+84.54.92.94 - - [01/Jun/2025 07:23:12] "GET /dashboard.html HTTP/1.1" 304 -

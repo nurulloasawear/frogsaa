@@ -1,0 +1,178 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="asserts/css/style.css">
+    <style>
+        .chart-container {
+            width: 80%;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="crud.html">CRUD</a></li>
+                    </ul>
+            </nav>
+            <div class="widget">
+                <span>Jami Foydalanuvchilar: 150</span>
+            </div>
+            <div class="widget">
+                <span>Yangi Buyurtmalar: 12</span>
+            </div>
+        </header>
+
+        <h2>Dashboard</h2>
+        <div id="username-display">Salom, foydalanuvchi!</div>
+        <button id="logout-btn">Chiqish</button>
+
+        <h3>Statistika</h3>
+        <table id="statistic-table">
+            <thead>
+                <tr>
+                    <th>Sarlavha</th>
+                    <th>Qiymat</th>
+                    <th>Vaqti</th>
+                </tr>
+            </thead>
+            <tbody id="statistic-body">
+                </tbody>
+        </table>
+
+        <h3>Grafiklar</h3>
+        <div class="chart-container">
+            <canvas id="lineChartDashboard1"></canvas>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="lineChartDashboard2"></canvas>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('dashboard.html uchun script yuklandi!');
+
+    // Dashboard uchun foydalanuvchi ismini ko'rsatish va chiqish tugmasi logikasi
+    const usernameDisplay = document.getElementById('username-display');
+    if (usernameDisplay) {
+        const username = localStorage.getItem('foydalanuvchi_nomi');
+        if (username) {
+            usernameDisplay.textContent = `Salom, ${username}!`;
+        }
+    }
+
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+            localStorage.removeItem('foydalanuvchi_nomi');
+            localStorage.removeItem('accessToken'); // Tokenni ham o'chiramiz
+            window.location.href = 'signin.html';
+        });
+    }
+
+    // Dashboard uchun statistikani olish va ko'rsatish (dashboard.html)
+    const statisticTable = document.getElementById('statistic-table');
+    const lineChartDashboard1Canvas = document.getElementById('lineChartDashboard1');
+    const lineChartDashboard2Canvas = document.getElementById('lineChartDashboard2');
+
+    if (statisticTable) {
+        loadStatistics();
+    }
+
+    function loadStatistics() {
+        const token = localStorage.getItem('accessToken'); // Tokenni olish
+        fetch('http://13.60.5.226:8000/api/api_2/statistics/', { // Statistikalar API manzili
+            headers: {
+                'Authorization': `Bearer ${token}`, // Tokenni headerga qo'shish
+            },
+        })
+            .then(response => response.json())
+            .then(data => displayStatistics(data))
+            .catch(error => console.error('Statistikalarni olishda xatolik (Loyiha 1):', error));
+    }
+
+    function displayStatistics(statistics) {
+        const tbody = document.getElementById('statistic-body');
+        if (tbody) {
+            tbody.innerHTML = '';
+            statistics.forEach(statistic => {
+                const row = tbody.insertRow();
+                row.innerHTML = `
+                    <td>${statistic.title}</td>
+                    <td>${statistic.value}</td>
+                    <td>${statistic.timestamp}</td>
+                `;
+            });
+        }
+    }
+
+    // Line graphlarni yaratish uchun funksiya
+    function createLineChart(canvas, data, label, color) {
+        const ctx = canvas.getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: data.labels,
+                datasets: [{
+                    label: label,
+                    data: data.values,
+                    borderColor: color,
+                    fill: false
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+    // Backenddan grafik ma'lumotlarini olish (items va statics)
+    function loadDashboardChartData() {
+        const token = localStorage.getItem('accessToken');
+
+        // Items bo'yicha grafik uchun ma'lumotlarni olish (taxminiy manzil)
+        fetch('http://13.60.5.226:8000/api/dashboard/items-chart-data/', {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            createLineChart(lineChartDashboard1Canvas, data, 'Mahsulotlar Dinamikasi', 'blue');
+        })
+        .catch(error => console.error('Dashboard Mahsulotlar Grafik ma\'lumotlarini olishda xatolik:', error));
+
+        // Statics bo'yicha grafik uchun ma'lumotlarni olish (taxminiy manzil)
+        fetch('http://13.60.5.226:8000/api/dashboard/statics-chart-data/', {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            createLineChart(lineChartDashboard2Canvas, data, 'Statistikalar Dinamikasi', 'green');
+        })
+        .catch(error => console.error('Dashboard Statistikalar Grafik ma\'lumotlarini olishda xatolik:', error));
+    }
+
+    // Grafik ma'lumotlarini yuklashni chaqirish
+    if (lineChartDashboard1Canvas && lineChartDashboard2Canvas) {
+        loadDashboardChartData();
+    }
+});
+</script>
+</body>
+</html>
